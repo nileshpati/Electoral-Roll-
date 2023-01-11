@@ -137,3 +137,18 @@ for filename in os.listdir(PDF_Directory):
       text_file = open('/content/drive/MyDrive/Sat/{}_33_end.txt'.format(filename),"a")
       text_file.write(textn)
       delete_images(image_path ='/content/drive/MyDrive/Sat/Images')
+      
+##first page information##
+PDF_Directory = '/content/drive/MyDrive/Sat/PDFs/Booth-222-250/'
+custom_config = r'-l eng+hin --psm 6'
+for filename in os.listdir(PDF_Directory):
+  if filename.endswith(".pdf"):
+     src_file = open(os.path.join(PDF_Directory, filename),'rb')
+     print(filename)
+     pdfreader = PdfReader(src_file)
+     i = 1
+     for pg in p2i.convert_from_path(PDF_Directory + filename , first_page = 1,last_page = 1,dpi = 200):
+            pg.save('/content/drive/MyDrive/Satyam/Images/{}_page.png'.format(i))
+            img = Image.open('/content/drive/MyDrive/Satyam/Images/{}_page.png'.format(i))
+     textn = pytesseract.image_to_string(img, config=custom_config)
+     text_file = open('/content/drive/MyDrive/Sat/{}_1.txt'.format(filename),"a")
