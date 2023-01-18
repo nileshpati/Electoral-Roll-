@@ -152,3 +152,18 @@ for filename in os.listdir(PDF_Directory):
             img = Image.open('/content/drive/MyDrive/Satyam/Images/{}_page.png'.format(i))
      textn = pytesseract.image_to_string(img, config=custom_config)
      text_file = open('/content/drive/MyDrive/Sat/{}_1.txt'.format(filename),"a")
+     
+#code to append all files:
+PDF_Directory = '/content/drive/MyDrive/Satyam/Word_Files/'
+fdf = pd.DataFrame(columns = ['content','Booth_Number'])
+for filename in os.listdir(PDF_Directory):
+  if filename.endswith(".txt"):
+    try:
+      file1 = open(PDF_Directory + filename)
+      df = pd.read_csv(PDF_Directory + filename, sep="\n", header=None )
+      df.columns = ['content']
+      df['Booth_Number'] = filename
+      fdf = fdf.append(df,ignore_index=True)
+      print(fdf.shape)
+    except:   
+      print(filename)
